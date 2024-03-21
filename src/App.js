@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./styles.css";
 
-function App() {
+function Button(props) {
+  const handlerClick = () => {
+    props.onClickAct(props.bkColor, props.txtColor);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <button className="Button" onClick={handlerClick} style={{ backgroundColor: props.bkColor }}>
+      <p style={{ color: props.txtColor }}>{props.text}</p>
+    </button>
+  );
+}
+function DisplayBlock(props) {
+  return (
+    <div class="DisplayBlock" style={{ backgroundColor: props.bkColor }}>
+        <p style={{ color: props.txtColor }}>Some text</p>
     </div>
   );
 }
-
-export default App;
+export default function App() {
+  const [displayBkColor, setDisplayBkColor] = useState("white");
+  const [displayTxtColor, setDisplayTxtColor] = useState("black");
+  const stateFunc = (newBkColor, newTxtColor) => {
+    setDisplayBkColor(newBkColor);
+    setDisplayTxtColor(newTxtColor);
+  };
+  return (
+    <>
+      <Button bkColor="red" txtColor="green" text="Red" onClickAct={stateFunc} />
+      <Button bkColor="green" txtColor="red" text="Green" onClickAct={stateFunc} />
+      <Button bkColor="yellow" txtColor="blue" text="Yellow" onClickAct={stateFunc}/>
+      <DisplayBlock bkColor={displayBkColor} txtColor={displayTxtColor}/>
+    </>
+  );
+}
